@@ -17,6 +17,11 @@ public class SimpleAnchorBinding : IStorageBinding
         get { return this.id; }
     }
 
+    public string StickyText
+    {
+        get { return this.stickyText; }
+    }
+
     public MLAnchors.Anchor Anchor
     {
         get { return this.anchor; }
@@ -28,14 +33,18 @@ public class SimpleAnchorBinding : IStorageBinding
     private string id;
 
     [SerializeField, HideInInspector]
+    private string stickyText;
+
+    [SerializeField, HideInInspector]
     private MLAnchors.Anchor anchor;
 
-    public bool Bind(MLAnchors.Anchor anchor, string jsonData)
+    public bool Bind(MLAnchors.Anchor anchor,string stickyTextToSave, string jsonData)
     {
         this.JsonData = jsonData;
         id = anchor.Id;
         this.anchor = anchor;
-
+        this.stickyText = stickyTextToSave;
+        
         Storage.SaveBinding(this);
 
         return true;

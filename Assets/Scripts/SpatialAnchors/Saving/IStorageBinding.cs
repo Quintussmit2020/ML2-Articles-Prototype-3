@@ -6,4 +6,6 @@ using UnityEngine.XR.MagicLeap;
 public interface IStorageBinding
 {
     public string Id { get; }
+    public string StickyText { get; }
+
 }
