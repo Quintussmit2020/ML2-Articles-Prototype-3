@@ -28,6 +28,10 @@ public class PlaceSticky : MonoBehaviour
     public GameObject stickyPlacementIndicator;
     public string newStickyText = "Click to add text";
 
+    //Creat a list to hold the random sticky items
+    List<string> myReminders = new List<string>();
+
+
     private bool isPlacing = false;
 
     private bool stickyRay = false;
@@ -79,10 +83,23 @@ public class PlaceSticky : MonoBehaviour
 
     private void Start()
     {
+        //add some items to our sticky note content list
+
+        myReminders.Add("buy milk");
+        myReminders.Add("You can do this!");
+        myReminders.Add("Solve world hunger");
+        myReminders.Add("invest in eggs");
+        myReminders.Add("Call Bob from accounting");
+        myReminders.Add("Remember wedding anniversary");
+        myReminders.Add("Password: #33$4156");
+        myReminders.Add("Pay utilities!!");
+        myReminders.Add("Pick up gin for Joy");
+        myReminders.Add("Get flatbread for Aaron");
+
         magicLeapInputs = new MagicLeapInputs();
         magicLeapInputs.Enable();
         controllerActions = new MagicLeapInputs.ControllerActions(magicLeapInputs);
-        controllerActions.Trigger.performed += Trigger_performed;
+        controllerActions.Trigger.canceled += Trigger_performed;
         controllerActions.Bumper.performed += Bumper_performed;
 
         CloseSticky.InstanceIDEvent += CloseSticky_InstanceIDEvent;
@@ -259,7 +276,9 @@ public class PlaceSticky : MonoBehaviour
             {        
                 var persistentObject = Instantiate(stickyNote, stickyPlacementIndicator.transform.position, stickyPlacementIndicator.transform.rotation);
                 TextMeshProUGUI stickyTextToSave = persistentObject.GetComponentInChildren<TextMeshProUGUI>();
-                stickyTextToSave.text = newStickyText; //Just some placeholder text for now
+                
+                string randomText = myReminders[UnityEngine.Random.Range(0, myReminders.Count)];
+                stickyTextToSave.text = randomText; //Just some placeholder text for now
                 Debug.Log("this is the persistent object ID" + persistentObject.GetInstanceID());
 
                 Transform buttonTransform = persistentObject.transform.Find("Canvas/Button");                
@@ -310,13 +329,14 @@ public class PlaceSticky : MonoBehaviour
         if (stickyRay)
         {
             Physics.Raycast(raycastRay, out RaycastHit stickyHitInfo, 100);
+            GameObject hitSticky = stickyHitInfo.collider.gameObject;
+            Debug.Log("I just hit " + hitSticky.GetInstanceID());
             OnStickyHitEvent?.Invoke(stickyHitInfo.collider.gameObject.GetInstanceID());
              stickyRay = false;
         }
 
-        //Debug.Log(buttonID+" "+ hitType.FullName);
 
-        var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
+        //var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
 
 
 

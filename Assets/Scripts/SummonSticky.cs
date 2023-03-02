@@ -12,6 +12,7 @@ public class SummonSticky : MonoBehaviour
     private Vector3 headPosition;
     private Quaternion originalRotation;
     private Quaternion headRotation;
+    private bool atNewPosition = false;
 
 
     private void Start()
@@ -22,6 +23,38 @@ public class SummonSticky : MonoBehaviour
         sendBackButton.onClick.AddListener(MoveStickyToOriginalPosition);
 
 
+    }
+
+    void OnEnable()
+    {
+        PlaceSticky.OnStickyHitEvent += HandleStickyRay;
+        Debug.Log("I am " + this.gameObject.GetInstanceID());
+    }
+
+    void OnDisable()
+    {
+        PlaceSticky.OnStickyHitEvent -= HandleStickyRay;
+    }
+
+
+    void HandleStickyRay(int stickyID)
+    {
+        
+        if(this.gameObject.GetInstanceID() == stickyID)
+        {
+
+            if(!atNewPosition)
+            {
+                StartCoroutine(LerpStickyToNewPosition());
+                atNewPosition = true;
+            }
+            else
+            {
+                StartCoroutine(LerpStickyToOriginalPosition());
+                atNewPosition = false;  
+            }
+
+        }
     }
 
     private void MoveStickyToNewPosition()
