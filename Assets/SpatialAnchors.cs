@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class SpatialAnchors : MonoBehaviour
 {
     public GameObject Prefab1;
     public GameObject Prefab2;
+    public string stickyText = "This is it for now";
 
     [Tooltip("How often, in seconds, to check if localization has changed.")]
     public float SearchInterval = 10;
@@ -176,7 +178,7 @@ public class SpatialAnchors : MonoBehaviour
         if (result.IsOk)
         {
             SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
-            savedAnchor.Bind(anchor, Prefab2.name);
+            savedAnchor.Bind(anchor, stickyText, Prefab2.name);
             var persistentObject = Instantiate(Prefab2, controllerPose.position, controllerPose.rotation);
             _persistentObjectsById.Add(anchor.Id, persistentObject);
             SimpleAnchorBinding.Storage.SaveToFile();
@@ -195,7 +197,7 @@ public class SpatialAnchors : MonoBehaviour
         if (result.IsOk)
         {
             SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
-            savedAnchor.Bind(anchor, Prefab1.name);
+            savedAnchor.Bind(anchor, stickyText, Prefab1.name);
             var persistentObject = Instantiate(Prefab1, controllerPose.position, controllerPose.rotation);
             _persistentObjectsById.Add(anchor.Id, persistentObject);
             SimpleAnchorBinding.Storage.SaveToFile();

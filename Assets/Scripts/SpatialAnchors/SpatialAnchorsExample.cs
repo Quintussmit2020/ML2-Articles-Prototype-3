@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,7 @@ public class SpatialAnchorsExample : MonoBehaviour
 {
     public GameObject Prefab1;
     public GameObject Prefab2;
+    public string stickyTextToSave = "nothing to see yet";
 
     [Tooltip("How often, in seconds, to check if localization has changed.")]
     public float SearchInterval = 10;
@@ -167,18 +169,27 @@ public class SpatialAnchorsExample : MonoBehaviour
     //Creates an anchor at the controller's position
     private void MenuStarted(InputAction.CallbackContext obj)
     {
+       //Get the pose of the controller to set the pose of the created object
         Pose controllerPose = new Pose(_controllerActions.Position.ReadValue<Vector3>(),
             _controllerActions.Rotation.ReadValue<Quaternion>());
 
+        //Create a new anchor at the point where the object should be saved
         MLAnchors.Anchor.Create(controllerPose, 300, out MLAnchors.Anchor anchor);
-
+        //publish the anchor to the local space
         var result = anchor.Publish();
+        //if there are no errors for the anchor, create the GameObject
         if (result.IsOk)
         {
+            //Use the SimpleAnchorBinding class
             SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
-            savedAnchor.Bind(anchor, Prefab2.name);
+            //Bind the anchor and GameObject name together, using the bind function in the SimpleAnchorBinding class
+            savedAnchor.Bind(anchor, stickyTextToSave, Prefab2.name); //Need to check what this does exactly
+            //Instantiate the GameObject
             var persistentObject = Instantiate(Prefab2, controllerPose.position, controllerPose.rotation);
+            //Create a new entry in the dictionary with all info to instantiate it again later (I need to add text here)
+            //This is based on ??
             _persistentObjectsById.Add(anchor.Id, persistentObject);
+            //Save all the info in a JSON string
             SimpleAnchorBinding.Storage.SaveToFile();
         }
     }
@@ -195,7 +206,7 @@ public class SpatialAnchorsExample : MonoBehaviour
         if (result.IsOk)
         {
             SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
-            savedAnchor.Bind(anchor, Prefab1.name);
+            savedAnchor.Bind(anchor, stickyTextToSave, Prefab1.name);
             var persistentObject = Instantiate(Prefab1, controllerPose.position, controllerPose.rotation);
             _persistentObjectsById.Add(anchor.Id, persistentObject);
             SimpleAnchorBinding.Storage.SaveToFile();

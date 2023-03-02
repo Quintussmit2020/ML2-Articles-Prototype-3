@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MagicLeap.Core;
+using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,16 +14,17 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
 
+
 public class PlaceSticky : MonoBehaviour
 {
     private MagicLeapInputs magicLeapInputs;
     private MagicLeapInputs.ControllerActions controllerActions;
-
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
-   
-    public GameObject stickyNote;
-    private GameObject stickyToPlace;
+    public GameObject stickyNote;    
+    public GameObject stickyPlacementIndicator;
+    public string newStickyText = "Click to add text";
+
     private bool isPlacing = false;
  
     public UnityEvent<GameObject, Vector3> OnStickyObjectHit;
@@ -146,50 +148,48 @@ public class PlaceSticky : MonoBehaviour
 
     private bool Localize()
     {
-        //MLResult startStatus = _spatialAnchorRequest.Start(new MLAnchors.Request.Params(Camera.main.transform.position, 100, 0, false));
-        //numberOfSearches++;
+        MLResult startStatus = _spatialAnchorRequest.Start(new MLAnchors.Request.Params(Camera.main.transform.position, 100, 0, false));
+        numberOfSearches++;
 
-        //if (!startStatus.IsOk)
-        //{
-        //    Debug.LogError("Could not start" + startStatus);
-        //    return false;
-        //}
+        if (!startStatus.IsOk)
+        {
+            Debug.LogError("Could not start" + startStatus);
+            return false;
+        }
 
-        //MLResult queryStatus = _spatialAnchorRequest.TryGetResult(out MLAnchors.Request.Result result);
+        MLResult queryStatus = _spatialAnchorRequest.TryGetResult(out MLAnchors.Request.Result result);
 
-        //if (!queryStatus.IsOk)
-        //{
-        //    Debug.LogError("Could not get result " + queryStatus);
-        //    return false;
-        //}
+        if (!queryStatus.IsOk)
+        {
+            Debug.LogError("Could not get result " + queryStatus);
+            return false;
+        }
 
         //Wait a search to make sure anchors are initialized
-        //if (numberOfSearches <= 1)
-        //{
-        //    Debug.LogWarning("Initializing Anchors");
-        //    Search again
-        //    _searchNow = true;
-        //    return false;
-        //}
+        if (numberOfSearches <= 1)
+        {
+            Debug.LogWarning("Initializing Anchors");
+            //Search again
+            _searchNow = true;
+            return false;
+        }
 
-        //for (int i = 0; i < result.anchors.Length; i++)
-        //{
-        //    MLAnchors.Anchor anchor = result.anchors[i];
-        //    var savedAnchor = SimpleAnchorBinding.Storage.Bindings.Find(x => x.Id == anchor.Id);
-        //    if (savedAnchor != null && _persistentObjectsById.ContainsKey(anchor.Id) == false)
-        //    {
-        //        if (savedAnchor.JsonData == stickyToPlace.name)
-        //        {
-        //            var persistentObject = Instantiate(Prefab1, anchor.Pose.position, anchor.Pose.rotation);
-        //            _persistentObjectsById.Add(anchor.Id, persistentObject);
-        //        }
-        //        else
-        //        {
-        //            var persistentObject = Instantiate(Prefab2, anchor.Pose.position, anchor.Pose.rotation);
-        //            _persistentObjectsById.Add(anchor.Id, persistentObject);
-        //        }
-        //    }
-        //}
+        for (int i = 0; i < result.anchors.Length; i++)
+        {
+            MLAnchors.Anchor anchor = result.anchors[i];
+            var savedAnchor = SimpleAnchorBinding.Storage.Bindings.Find(x => x.Id == anchor.Id);
+            if (savedAnchor != null && _persistentObjectsById.ContainsKey(anchor.Id) == false)
+            {
+                if (savedAnchor.JsonData == stickyNote.name)
+                {
+                    var persistentObject = Instantiate(stickyNote, anchor.Pose.position, anchor.Pose.rotation);
+                    TextMeshProUGUI stickyText = persistentObject.GetComponentInChildren<TextMeshProUGUI>();
+                    stickyText.text = savedAnchor.StickyText;
+                    _persistentObjectsById.Add(anchor.Id, persistentObject);
+                }
+
+            }
+        }
 
         return true;
     }
@@ -198,30 +198,48 @@ public class PlaceSticky : MonoBehaviour
     private void Bumper_performed(InputAction.CallbackContext obj)
     {
         if (!isPlacing)
-        {   //instantiate the stickynote
-            stickyToPlace = Instantiate(stickyNote, controllerActions.Position.ReadValue<Vector3>(), controllerActions.Rotation.ReadValue<Quaternion>());
+        {
+            stickyPlacementIndicator.SetActive(true);          
             isPlacing = true;
         }
         else
         {          
-            Pose stickyPose = new Pose(stickyToPlace.transform.position, stickyToPlace.transform.rotation);
-            stickyToPlace.SetActive(true);
-            Debug.Log("Sticky placed");
-            isPlacing = false;
-            //SetAnchor(stickyPose);
+            Pose stickyPose = new Pose(stickyPlacementIndicator.transform.position, stickyPlacementIndicator.transform.rotation);
+            //GameObject NewSticky = Instantiate(stickyNote, stickyPlacementIndicator.transform.position, stickyPlacementIndicator.transform.rotation);
 
-            //MLAnchors.Anchor.Create(stickyPose, 300, out MLAnchors.Anchor anchor);
-            //var result = anchor.Publish();
+            stickyPlacementIndicator.SetActive(false);
+            isPlacing = false;        
 
-            //if (result.IsOk)
-            //{
-            //    SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
-            //    savedAnchor.Bind(anchor, stickyToPlace.name);               
-            //    _persistentObjectsById.Add(anchor.Id, stickyToPlace);
-            //    SimpleAnchorBinding.Storage.SaveToFile();
-            //}
+            MLAnchors.Anchor.Create(stickyPose, 300, out MLAnchors.Anchor anchor);
+            var result = anchor.Publish();
+            if (result.IsOk)
+            {        
+                var persistentObject = Instantiate(stickyNote, stickyPlacementIndicator.transform.position, stickyPlacementIndicator.transform.rotation);
+                TextMeshProUGUI stickyTextToSave = persistentObject.GetComponentInChildren<TextMeshProUGUI>();
+                stickyTextToSave.text = newStickyText; //Just some placeholder text for now
+                Debug.Log("this is the persistent object ID" + persistentObject.GetInstanceID());
 
-            Debug.Log(stickyToPlace.gameObject.tag + " is now placed");
+                Transform buttonTransform = persistentObject.transform.Find("Canvas/Button");                
+
+                if (buttonTransform != null)
+                {                    
+                    int instanceId = buttonTransform.gameObject.GetInstanceID();
+                   
+                }
+                else
+                {
+                    Debug.Log("Button not found");
+                }
+
+                SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
+                savedAnchor.Bind(anchor, stickyTextToSave.text, stickyNote.name);
+                
+                _persistentObjectsById.Add(anchor.Id, persistentObject);
+                SimpleAnchorBinding.Storage.SaveToFile();
+               
+            }
+
+
         }
 
     }
@@ -235,17 +253,20 @@ public class PlaceSticky : MonoBehaviour
     {
         Ray raycastRay = new Ray(controllerActions.Position.ReadValue<Vector3>(), controllerActions.Rotation.ReadValue<Quaternion>() * Vector3.forward);
         Vector3 newStickyPosition = raycastRay.direction * 1f;
-        if (isPlacing & Physics.Raycast(raycastRay, out RaycastHit hitInfo, 100, LayerMask.GetMask("Mesh","UI")))
+        if (isPlacing & Physics.Raycast(raycastRay, out RaycastHit hitInfo, 100, LayerMask.GetMask("Mesh")))
         {
-            Debug.Log(hitInfo.transform);
-            stickyToPlace.transform.position = hitInfo.point;
-            stickyToPlace.transform.rotation = Quaternion.LookRotation(-hitInfo.normal);
+            stickyPlacementIndicator.transform.position = hitInfo.point;
+            stickyPlacementIndicator.transform.rotation = Quaternion.LookRotation(-hitInfo.normal);
         }
 
-        if (!isPlacing & Physics.Raycast(raycastRay, out RaycastHit hitObject, 100))
-        {
-                OnStickyObjectHit.Invoke(hitObject.collider.gameObject, newStickyPosition);
-        } 
+        Physics.Raycast(raycastRay, out RaycastHit UIhitInfo, 100);
+        int buttonID = UIhitInfo.collider.gameObject.GetInstanceID();
+        Type hitType = UIhitInfo.collider.gameObject.GetType();
+       
+
+        //Debug.Log(buttonID+" "+ hitType.FullName);
+
+
 
     }
 
@@ -258,13 +279,13 @@ public class PlaceSticky : MonoBehaviour
         MLAnchors.Anchor.Create(stickyPose, 300, out MLAnchors.Anchor anchor);
         // Publish the anchor to the map after it is created.
         anchor.Publish();
-        Debug.Log("anchor create at" + anchor);
+        Debug.Log("anchor created at" + anchor);
     }
 
     public void DestroySticky()
     {
         Debug.Log("Close button detected");
-        Destroy(this.gameObject); // Destroy the game object this script is attached to
+        
     }
 
     private void OnPermissionGranted(string permission)

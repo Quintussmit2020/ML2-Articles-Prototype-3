@@ -17,5 +17,6 @@ public class CloseSticky : MonoBehaviour
     {
         Destroy(gameObject); // Destroy the game object this script is attached to
         Debug.Log("Sticky should now be dead");
+        Debug.Log("GameObject instance ID was " + this.gameObject.GetInstanceID());
     }
 }
