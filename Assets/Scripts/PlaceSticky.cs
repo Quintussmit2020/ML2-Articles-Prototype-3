@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MagicLeap.Core;
 using TMPro;
 using Unity.Mathematics;
@@ -21,20 +22,27 @@ public class PlaceSticky : MonoBehaviour
     private MagicLeapInputs.ControllerActions controllerActions;
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
+    private MagicLeapInputs.EyesActions eyesActions;
+
     public GameObject stickyNote;    
     public GameObject stickyPlacementIndicator;
     public string newStickyText = "Click to add text";
 
     private bool isPlacing = false;
+
+    private bool stickyRay = false;
  
     public UnityEvent<GameObject, Vector3> OnStickyObjectHit;
 
+    //Delegate for the even that will inform a stickynote when a ray hits it.
+    public delegate void StickyRayEventHandler(int stickyID);
+    public static event StickyRayEventHandler OnStickyHitEvent;
 
     [Tooltip("How often, in seconds, to check if localization has changed.")]
     public float SearchInterval = 10;
 
     //Track the objects we already created to avoid duplicates
-    private Dictionary<string, GameObject> _persistentObjectsById = new Dictionary<string, GameObject>();
+    private Dictionary<string, int> _persistentObjectsById = new Dictionary<string, int>();
 
     private string _localizedSpace;
 
@@ -66,6 +74,7 @@ public class PlaceSticky : MonoBehaviour
         permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
         permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
+        CloseSticky.InstanceIDEvent -= CloseSticky_InstanceIDEvent;
     }
 
     private void Start()
@@ -76,7 +85,13 @@ public class PlaceSticky : MonoBehaviour
         controllerActions.Trigger.performed += Trigger_performed;
         controllerActions.Bumper.performed += Bumper_performed;
 
-     
+        CloseSticky.InstanceIDEvent += CloseSticky_InstanceIDEvent;
+
+        InputSubsystem.Extensions.MLEyes.StartTracking();
+        //eyesActions = new MagicLeapInputs.EyesActions(magicLeapInputs);
+
+
+
 
         //Load Data
         SimpleAnchorBinding.Storage.LoadFromFile();
@@ -95,6 +110,18 @@ public class PlaceSticky : MonoBehaviour
 
         _spatialAnchorRequest = new MLAnchors.Request();
     }
+
+   /*Gets the event fired by the close button on the sticky note script "CloseSticky" and receives the ID of the
+  gameobject that was closed. 
+    */
+    private void CloseSticky_InstanceIDEvent(int instanceID)
+    {
+        string anchorToDestroy = _persistentObjectsById.FirstOrDefault(x => x.Value == instanceID).Key;
+        RemoveAnchor(anchorToDestroy);
+
+        Debug.Log("Instance ID received: " + instanceID +" and anchor is " + anchorToDestroy);
+    }
+
     void LateUpdate()
     {
         // Only search when the update time lapsed 
@@ -131,11 +158,27 @@ public class PlaceSticky : MonoBehaviour
         }
     }
 
+
+    public Vector3 GetHeadsetPosition()
+    {
+        Vector3 headPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
+        return headPosition;
+    }
+
+
+
     private void ClearVisuals()
     {
         foreach (var prefab in _persistentObjectsById.Values)
         {
-            Destroy(prefab);
+            GameObject objToDestroy = GameObject.FindObjectsOfType<GameObject>().FirstOrDefault(obj => obj.GetInstanceID() == prefab);
+
+            if (objToDestroy != null)
+            {
+                Destroy(objToDestroy);
+            }
+
+            //Destroy(prefab);
         }
         _persistentObjectsById.Clear();
     }
@@ -185,7 +228,7 @@ public class PlaceSticky : MonoBehaviour
                     var persistentObject = Instantiate(stickyNote, anchor.Pose.position, anchor.Pose.rotation);
                     TextMeshProUGUI stickyText = persistentObject.GetComponentInChildren<TextMeshProUGUI>();
                     stickyText.text = savedAnchor.StickyText;
-                    _persistentObjectsById.Add(anchor.Id, persistentObject);
+                    _persistentObjectsById.Add(anchor.Id, persistentObject.GetInstanceID());
                 }
 
             }
@@ -234,7 +277,7 @@ public class PlaceSticky : MonoBehaviour
                 SimpleAnchorBinding savedAnchor = new SimpleAnchorBinding();
                 savedAnchor.Bind(anchor, stickyTextToSave.text, stickyNote.name);
                 
-                _persistentObjectsById.Add(anchor.Id, persistentObject);
+                _persistentObjectsById.Add(anchor.Id, persistentObject.GetInstanceID());
                 SimpleAnchorBinding.Storage.SaveToFile();
                
             }
@@ -247,6 +290,7 @@ public class PlaceSticky : MonoBehaviour
     private void Trigger_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         //going to add keyboard stuff here
+        stickyRay = true;
     }
 
     private void Update()
@@ -259,12 +303,20 @@ public class PlaceSticky : MonoBehaviour
             stickyPlacementIndicator.transform.rotation = Quaternion.LookRotation(-hitInfo.normal);
         }
 
-        Physics.Raycast(raycastRay, out RaycastHit UIhitInfo, 100);
-        int buttonID = UIhitInfo.collider.gameObject.GetInstanceID();
-        Type hitType = UIhitInfo.collider.gameObject.GetType();
-       
+        //Physics.Raycast(raycastRay, out RaycastHit UIhitInfo, 100);
+        //int buttonID = UIhitInfo.collider.gameObject.GetInstanceID();
+        //Type hitType = UIhitInfo.collider.gameObject.GetType();
+
+        if (stickyRay)
+        {
+            Physics.Raycast(raycastRay, out RaycastHit stickyHitInfo, 100);
+            OnStickyHitEvent?.Invoke(stickyHitInfo.collider.gameObject.GetInstanceID());
+             stickyRay = false;
+        }
 
         //Debug.Log(buttonID+" "+ hitType.FullName);
+
+        var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
 
 
 
@@ -282,10 +334,23 @@ public class PlaceSticky : MonoBehaviour
         Debug.Log("anchor created at" + anchor);
     }
 
-    public void DestroySticky()
+
+    //Returns true if the ID existed in the localized space and in the saved data
+    private bool RemoveAnchor(string id)
     {
-        Debug.Log("Close button detected");
-        
+        //Delete the anchor using the Anchor's ID
+        var savedAnchor = SimpleAnchorBinding.Storage.Bindings.Find(x => x.Id == id);
+        //Delete the gameObject if it exists
+        if (savedAnchor != null)
+        {
+
+            MLAnchors.Anchor.DeleteAnchorWithId(id);
+            savedAnchor.UnBind();
+            SimpleAnchorBinding.Storage.SaveToFile();
+            return true;
+        }
+
+        return false;
     }
 
     private void OnPermissionGranted(string permission)
@@ -300,6 +365,7 @@ public class PlaceSticky : MonoBehaviour
     {
 
     }
+
 
 }
 
