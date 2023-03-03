@@ -336,7 +336,7 @@ public class PlaceSticky : MonoBehaviour
         }
 
 
-        //var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
+        var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
 
 
 
