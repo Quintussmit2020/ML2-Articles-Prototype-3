@@ -17475,7 +17475,7 @@ IL_037b_1:
 				RuntimeObject* L_204;
 				L_204 = VirtualFuncInvoker2< RuntimeObject*, RuntimeObject*, Type_t* >::Invoke(11, __this, L_202, L_203);
 				NullCheck(L_200);
-				InterfaceActionInvoker2< RuntimeObject*, RuntimeObject* >::Invoke(3, IDictionary_t6D03155AF1FA9083817AA5B6AD7DEEACC26AB220_il2cpp_TypeInfo_var, L_200, L_201, L_204);
+				InterfaceActionInvoker2< RuntimeObject*, RuntimeObject* >::Invoke(5, IDictionary_t6D03155AF1FA9083817AA5B6AD7DEEACC26AB220_il2cpp_TypeInfo_var, L_200, L_201, L_204);
 			}
 
 IL_03a1_1:
@@ -17592,7 +17592,7 @@ IL_0405_1:
 				L_227 = KeyValuePair_2_get_Key_m1E1C1AA3D1DA5B845BFA2262BCE999FFAC458022_inline((&V_15), KeyValuePair_2_get_Key_m1E1C1AA3D1DA5B845BFA2262BCE999FFAC458022_RuntimeMethod_var);
 				NullCheck(L_226);
 				bool L_228;
-				L_228 = InterfaceFuncInvoker2< bool, String_t*, RuntimeObject** >::Invoke(5, IDictionary_2_t79D4ADB15B238AC117DF72982FEA3C42EF5AFA19_il2cpp_TypeInfo_var, L_226, L_227, (&V_16));
+				L_228 = InterfaceFuncInvoker2< bool, String_t*, RuntimeObject** >::Invoke(7, IDictionary_2_t79D4ADB15B238AC117DF72982FEA3C42EF5AFA19_il2cpp_TypeInfo_var, L_226, L_227, (&V_16));
 				if (!L_228)
 				{
 					goto IL_0452_1;
@@ -18270,7 +18270,7 @@ IL_003c_1:
 				RuntimeObject* L_22;
 				L_22 = GetDelegate_Invoke_m7F997F5DF9F41C44178969AD89464D6E22CB15E5_inline(L_20, L_21, NULL);
 				NullCheck(L_17);
-				InterfaceActionInvoker2< String_t*, RuntimeObject* >::Invoke(4, IDictionary_2_t79D4ADB15B238AC117DF72982FEA3C42EF5AFA19_il2cpp_TypeInfo_var, L_17, L_19, L_22);
+				InterfaceActionInvoker2< String_t*, RuntimeObject* >::Invoke(5, IDictionary_2_t79D4ADB15B238AC117DF72982FEA3C42EF5AFA19_il2cpp_TypeInfo_var, L_17, L_19, L_22);
 			}
 
 IL_006c_1:

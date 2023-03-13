@@ -179,6 +179,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.XR.CoreUtils.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\com.magicleap.xrkeyboard.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.Runtime.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
@@ -198,11 +199,14 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\EasyButtons.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Utilities.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Toolbox.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Registration.dll
@@ -401,6 +405,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.XR.CoreUtils.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\com.magicleap.xrkeyboard.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.Runtime.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
@@ -420,11 +425,14 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\EasyButtons.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Utilities.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Toolbox.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Services.Core.Registration.dll
