@@ -5973,17 +5973,17 @@ struct U3CUpdateTransformEndOfFrameU3Ed__25_t03D6AA23BC3523D860D428530F1C5EC369E
 	PlaceInFront_tF0F0333BEEA550BBA2F14233862E9483BE434B0D* ___U3CU3E4__this_2;
 };
 
-struct U3CU3Ec__DisplayClass28_0_tDAE73FAC36F3E8A175E063455D986D5BA75BE5D7  : public RuntimeObject
+struct U3CU3Ec__DisplayClass30_0_tF8FD4A4CDB93B7EE4ED57E457BF43759DF8B9522  : public RuntimeObject
 {
 	int32_t ___instanceID_0;
 };
 
-struct U3CU3Ec__DisplayClass31_0_t081CE1E8DDDFD3D4FDEC27DAB37D14FDDEED05A4  : public RuntimeObject
+struct U3CU3Ec__DisplayClass33_0_t0A627A8F53CE1DBAF022234B1A64C199CE2E42C7  : public RuntimeObject
 {
 	int32_t ___prefab_0;
 };
 
-struct U3CU3Ec__DisplayClass38_0_t21452DD4E9FC1E33334CCEE79AC1C58205B90779  : public RuntimeObject
+struct U3CU3Ec__DisplayClass40_0_tBA3ECA72272215ED560B4A27D0C79AC04F60F696  : public RuntimeObject
 {
 	String_t* ___id_0;
 };
@@ -28474,7 +28474,7 @@ struct ContactEventDelegate_t0C12A4C4BCCBB815C830E63B3AE93E420C0ADB32  : public 
 {
 };
 
-struct U3CU3Ec__DisplayClass33_0_t0A627A8F53CE1DBAF022234B1A64C199CE2E42C7  : public RuntimeObject
+struct U3CU3Ec__DisplayClass35_0_tD18CE9EA235BCD19871B845F53F4FDDDAD6B1446  : public RuntimeObject
 {
 	Anchor_t31F76F4EFF7FC4DF7C64AFF2B2EEE00FBC5B5712 ___anchor_0;
 };
@@ -29848,28 +29848,29 @@ struct PlaceSticky_tC67216EFC145675411E027EFCA289D9FEC583A1E  : public MonoBehav
 	ControllerActions_tF19954DCC7AE6EC35A7B3D498A74A95E3FB29137 ___controllerActions_6;
 	Callbacks_tA739FB917CC73A143CAA3F44F2CC3D78EC80F6FC* ___permissionCallbacks_7;
 	EyesActions_tC3498B448BB3079B68AB16F097567A99A92ECFC5 ___eyesActions_8;
-	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___stickyNote_9;
-	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___stickyPlacementIndicator_10;
-	String_t* ___newStickyText_11;
-	List_1_tF470A3BE5C1B5B68E1325EF3F109D172E60BD7CD* ___myReminders_12;
-	bool ___isPlacing_13;
-	bool ___stickyRay_14;
-	UnityEvent_2_tDBF7C9E223971B89CF3A04972366C50007DD7085* ___OnStickyObjectHit_15;
-	float ___SearchInterval_17;
-	Dictionary_2_t5C8F46F5D57502270DD9E1DA8303B23C7FE85588* ____persistentObjectsById_18;
-	String_t* ____localizedSpace_19;
-	Request_tE917090B5D556C476765DDEBE864502364E8F096* ____spatialAnchorRequest_20;
-	Params_tC8A448216B074E1345B6A3E20F5C5A1FC47D11AE ____anchorRequestParams_21;
-	Pose_t06BA69EAA6E9FAF60056D519A87D25F54AFE7971 ___publicStickyPose_22;
-	Anchor_t31F76F4EFF7FC4DF7C64AFF2B2EEE00FBC5B5712 ___anchor_23;
-	bool ____searchNow_24;
-	float ____lastTick_25;
-	int32_t ___numberOfSearches_26;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___eyeTracker_9;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___stickyNote_10;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___stickyPlacementIndicator_11;
+	String_t* ___newStickyText_12;
+	List_1_tF470A3BE5C1B5B68E1325EF3F109D172E60BD7CD* ___myReminders_13;
+	bool ___isPlacing_14;
+	bool ___stickyRay_15;
+	UnityEvent_2_tDBF7C9E223971B89CF3A04972366C50007DD7085* ___OnStickyObjectHit_16;
+	float ___SearchInterval_18;
+	Dictionary_2_t5C8F46F5D57502270DD9E1DA8303B23C7FE85588* ____persistentObjectsById_19;
+	String_t* ____localizedSpace_20;
+	Request_tE917090B5D556C476765DDEBE864502364E8F096* ____spatialAnchorRequest_21;
+	Params_tC8A448216B074E1345B6A3E20F5C5A1FC47D11AE ____anchorRequestParams_22;
+	Pose_t06BA69EAA6E9FAF60056D519A87D25F54AFE7971 ___publicStickyPose_23;
+	Anchor_t31F76F4EFF7FC4DF7C64AFF2B2EEE00FBC5B5712 ___anchor_24;
+	bool ____searchNow_25;
+	float ____lastTick_26;
+	int32_t ___numberOfSearches_27;
 };
 
 struct PlaceSticky_tC67216EFC145675411E027EFCA289D9FEC583A1E_StaticFields
 {
-	StickyRayEventHandler_t701E5A921456F04F4E50F86F80BDD5A0DDF31FCB* ___OnStickyHitEvent_16;
+	StickyRayEventHandler_t701E5A921456F04F4E50F86F80BDD5A0DDF31FCB* ___OnStickyHitEvent_17;
 };
 
 struct PopupPanel_tA03F333DD9312F8E3214B44CF6C6CB96A8B21D65  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
@@ -38223,13 +38224,13 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize8016 = { sizeof(MeshScript_t
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8017;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8017 = { sizeof(StickyRayEventHandler_t701E5A921456F04F4E50F86F80BDD5A0DDF31FCB), sizeof(Il2CppMethodPointer), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8018;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8018 = { sizeof(U3CU3Ec__DisplayClass28_0_tDAE73FAC36F3E8A175E063455D986D5BA75BE5D7), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8018 = { sizeof(U3CU3Ec__DisplayClass30_0_tF8FD4A4CDB93B7EE4ED57E457BF43759DF8B9522), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8019;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8019 = { sizeof(U3CU3Ec__DisplayClass31_0_t081CE1E8DDDFD3D4FDEC27DAB37D14FDDEED05A4), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8019 = { sizeof(U3CU3Ec__DisplayClass33_0_t0A627A8F53CE1DBAF022234B1A64C199CE2E42C7), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8020;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8020 = { sizeof(U3CU3Ec__DisplayClass33_0_t0A627A8F53CE1DBAF022234B1A64C199CE2E42C7), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8020 = { sizeof(U3CU3Ec__DisplayClass35_0_tD18CE9EA235BCD19871B845F53F4FDDDAD6B1446), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8021;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8021 = { sizeof(U3CU3Ec__DisplayClass38_0_t21452DD4E9FC1E33334CCEE79AC1C58205B90779), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8021 = { sizeof(U3CU3Ec__DisplayClass40_0_tBA3ECA72272215ED560B4A27D0C79AC04F60F696), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8022;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8022 = { sizeof(PlaceSticky_tC67216EFC145675411E027EFCA289D9FEC583A1E), -1, sizeof(PlaceSticky_tC67216EFC145675411E027EFCA289D9FEC583A1E_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8023;

@@ -14,6 +14,7 @@ using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
+using static MagicLeapInputs;
 
 
 public class PlaceSticky : MonoBehaviour
@@ -23,6 +24,8 @@ public class PlaceSticky : MonoBehaviour
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
     private MagicLeapInputs.EyesActions eyesActions;
+
+    public GameObject eyeTracker;
 
     public GameObject stickyNote;    
     public GameObject stickyPlacementIndicator;
@@ -99,6 +102,7 @@ public class PlaceSticky : MonoBehaviour
         controllerActions = new MagicLeapInputs.ControllerActions(magicLeapInputs);
         controllerActions.Trigger.canceled += Trigger_performed;
         controllerActions.Bumper.performed += Bumper_performed;
+        controllerActions.Menu.performed += Menu_performed;
 
         CloseSticky.InstanceIDEvent += CloseSticky_InstanceIDEvent;
 
@@ -126,9 +130,14 @@ public class PlaceSticky : MonoBehaviour
         _spatialAnchorRequest = new MLAnchors.Request();
     }
 
-   /*Gets the event fired by the close button on the sticky note script "CloseSticky" and receives the ID of the
-  gameobject that was closed. 
-    */
+    private void Menu_performed(InputAction.CallbackContext obj)
+    {
+        eyeTracker.SetActive(!eyeTracker.activeSelf);
+    }
+
+    /*Gets the event fired by the close button on the sticky note script "CloseSticky" and receives the ID of the
+   gameobject that was closed. 
+     */
     private void CloseSticky_InstanceIDEvent(int instanceID)
     {
         string anchorToDestroy = _persistentObjectsById.FirstOrDefault(x => x.Value == instanceID).Key;
