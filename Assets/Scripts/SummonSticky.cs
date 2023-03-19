@@ -57,15 +57,21 @@ public class SummonSticky : MonoBehaviour
         }
     }
 
-    private void MoveStickyToNewPosition()
+    public void MoveStickyToNewPosition()
     {
-        StartCoroutine(LerpStickyToNewPosition());
-        //    headPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
-        //    this.transform.position = headPosition;
-        //    headRotation = Camera.main.transform.rotation;
-        //    this.transform.rotation = headRotation;
-        //    summonButton.gameObject.SetActive(false);
-        //    sendBackButton.gameObject.SetActive(true);
+    
+            if (!atNewPosition)
+            {
+                StartCoroutine(LerpStickyToNewPosition());
+                atNewPosition = true;
+            }
+            else
+            {
+                StartCoroutine(LerpStickyToOriginalPosition());
+                atNewPosition = false;
+            }
+
+       
     }
 
     private IEnumerator LerpStickyToNewPosition()

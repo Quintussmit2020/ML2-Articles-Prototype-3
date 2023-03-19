@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
@@ -26,6 +26,9 @@ public class PlaceSticky : MonoBehaviour
     private MagicLeapInputs.EyesActions eyesActions;
 
     public GameObject eyeTracker;
+    public GameObject eyeTrackerMenu;
+
+    public GameObject MeshController;
 
     public GameObject stickyNote;    
     public GameObject stickyPlacementIndicator;
@@ -35,10 +38,23 @@ public class PlaceSticky : MonoBehaviour
     List<string> myReminders = new List<string>();
 
 
+    //Spatial menu properties
+    public Button openSpaceButton;
+    public Button continueButton;
+    public GameObject spatialMenu;
+    public TextMeshProUGUI menuSpatialText;
+    public TextMeshProUGUI menuSpacesText;
+
+    //Eye tracking menu properties
+    public TextMeshProUGUI eyeTrackingText;
+
     private bool isPlacing = false;
 
     private bool stickyRay = false;
+
  
+
+
     public UnityEvent<GameObject, Vector3> OnStickyObjectHit;
 
     //Delegate for the event that will inform a stickynote when a ray hits it. 
@@ -75,6 +91,7 @@ public class PlaceSticky : MonoBehaviour
         permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
         permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
+        CloseSticky.InstanceIDEvent += CloseSticky_InstanceIDEvent;
     }
 
     private void OnDestroy()
@@ -88,7 +105,6 @@ public class PlaceSticky : MonoBehaviour
     private void Start()
     {
         //add some items to our sticky note content list
-
         myReminders.Add("buy milk");
         myReminders.Add("You can do this!");
         myReminders.Add("Solve world hunger");
@@ -100,39 +116,116 @@ public class PlaceSticky : MonoBehaviour
         magicLeapInputs = new MagicLeapInputs();
         magicLeapInputs.Enable();
         controllerActions = new MagicLeapInputs.ControllerActions(magicLeapInputs);
+
+        //subscribe to the controller button events
         controllerActions.Trigger.canceled += Trigger_performed;
         controllerActions.Bumper.performed += Bumper_performed;
         controllerActions.Menu.performed += Menu_performed;
 
-        CloseSticky.InstanceIDEvent += CloseSticky_InstanceIDEvent;
+        //Subscribe to the spatial check menu buttons
+        continueButton.onClick.AddListener(ContinueToMain);
+        openSpaceButton.onClick.AddListener(OpenSpaces);
 
         InputSubsystem.Extensions.MLEyes.StartTracking();
         //eyesActions = new MagicLeapInputs.EyesActions(magicLeapInputs);
 
-
-
-
         //Load JSON Data from file at start
         SimpleAnchorBinding.Storage.LoadFromFile();
 
-        var result = MLPermissions.CheckPermission(MLPermission.SpatialAnchors);
-        if (result.IsOk)
-        {
-            MLResult mlResult = MLAnchors.GetLocalizationInfo(out MLAnchors.LocalizationInfo info);
-#if !UNITY_EDITOR
-            if (info.LocalizationStatus == MLAnchors.LocalizationStatus.NotLocalized)
-            {
-                UnityEngine.XR.MagicLeap.SettingsIntentsLauncher.LaunchSystemSettings("com.magicleap.intent.action.SELECT_SPACE");
-            }
-#endif
-        }
+        //Start the spatial check menu
+        spatialMenu.SetActive(true);
+
+        // First check for spatialization
+        SpatialCheck();
 
         _spatialAnchorRequest = new MLAnchors.Request();
+
+    }
+
+    private void SpatialCheck()
+    {
+        var result = MLPermissions.CheckPermission(MLPermission.SpatialAnchors);
+
+        if (result.IsOk)
+        {
+            TextMeshProUGUI permissionText = menuSpatialText.GetComponent<TextMeshProUGUI>();
+            permissionText.text = "Spatial permission: ok";
+            MLResult mlResult = MLAnchors.GetLocalizationInfo(out MLAnchors.LocalizationInfo info);
+            //#if !UNITY_EDITOR
+            if (info.LocalizationStatus == MLAnchors.LocalizationStatus.NotLocalized)
+            {
+                //Set error text
+                TextMeshProUGUI spacesText = menuSpacesText.GetComponent<TextMeshProUGUI>();
+                spacesText.text = "Localization: None. Click the button below to open the spaces app, select or set a space then run the demo project again";
+
+                //activate Button
+                openSpaceButton.gameObject.SetActive(true);
+                continueButton.gameObject.SetActive(false);
+
+            }
+            else
+            {
+                //Set error text
+                TextMeshProUGUI spacesText = menuSpacesText.GetComponent<TextMeshProUGUI>();
+                spacesText.text = "Localization: ok";
+
+                //activate Button
+                openSpaceButton.gameObject.SetActive(false);
+                continueButton.gameObject.SetActive(true);
+
+
+
+                //debug print the error
+                Debug.Log("GetLocalizationInfo Error " + mlResult);
+            }
+            //#endif
+
+            //If we were able to get the localization info, debug it.
+            if (mlResult.IsOk)
+            {
+
+                Debug.Log("GetLocalizationInfo " + mlResult);
+            }
+            else
+            {
+                Debug.Log("GetLocalizationInfo Error " + mlResult);
+            }
+
+
+
+        }
+    }
+    
+    private void OpenSpaces()
+    {
+        UnityEngine.XR.MagicLeap.SettingsIntentsLauncher.LaunchSystemSettings("com.magicleap.intent.action.SELECT_SPACE");
+        Application.Quit();
+    }
+
+    private void ContinueToMain()
+    {
+        //hide the spatial checks menu
+        spatialMenu.SetActive(false);
+        //switch on meshing
+        MeshController.SetActive(true);
+        eyeTrackerMenu.SetActive(true);
     }
 
     private void Menu_performed(InputAction.CallbackContext obj)
     {
         eyeTracker.SetActive(!eyeTracker.activeSelf);
+
+        TextMeshProUGUI eyetrackerText = eyeTrackingText.GetComponent<TextMeshProUGUI>();
+        
+        if (eyeTracker.activeSelf)
+        {
+            eyetrackerText.text = "Eye tracking on";
+        }
+        else
+        {
+            eyetrackerText.text = "Eye tracking off";
+        }
+
     }
 
     /*Gets the event fired by the close button on the sticky note script "CloseSticky" and receives the ID of the
@@ -144,6 +237,39 @@ public class PlaceSticky : MonoBehaviour
         RemoveAnchor(anchorToDestroy);
 
         Debug.Log("Instance ID received: " + instanceID +" and anchor is " + anchorToDestroy);
+    }
+
+    private void Update()
+    {
+        
+       
+        
+        Ray raycastRay = new Ray(controllerActions.Position.ReadValue<Vector3>(), controllerActions.Rotation.ReadValue<Quaternion>() * Vector3.forward);
+        Vector3 newStickyPosition = raycastRay.direction * 1f;
+        if (isPlacing & Physics.Raycast(raycastRay, out RaycastHit hitInfo, 100, LayerMask.GetMask("Mesh")))
+        {
+            stickyPlacementIndicator.transform.position = hitInfo.point;
+            stickyPlacementIndicator.transform.rotation = Quaternion.LookRotation(-hitInfo.normal);
+        }
+
+        //Physics.Raycast(raycastRay, out RaycastHit UIhitInfo, 100);
+        //int buttonID = UIhitInfo.collider.gameObject.GetInstanceID();
+        //Type hitType = UIhitInfo.collider.gameObject.GetType();
+
+        if (stickyRay)
+        {
+            Physics.Raycast(raycastRay, out RaycastHit stickyHitInfo, 100);
+            GameObject hitSticky = stickyHitInfo.collider.gameObject;
+            Debug.Log("I just hit " + hitSticky.GetInstanceID());
+            OnStickyHitEvent?.Invoke(stickyHitInfo.collider.gameObject.GetInstanceID());
+            stickyRay = false;
+        }
+
+
+        var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
+
+
+
     }
 
     void LateUpdate()
@@ -334,35 +460,7 @@ public class PlaceSticky : MonoBehaviour
         stickyRay = true;
     }
 
-    private void Update()
-    {
-        Ray raycastRay = new Ray(controllerActions.Position.ReadValue<Vector3>(), controllerActions.Rotation.ReadValue<Quaternion>() * Vector3.forward);
-        Vector3 newStickyPosition = raycastRay.direction * 1f;
-        if (isPlacing & Physics.Raycast(raycastRay, out RaycastHit hitInfo, 100, LayerMask.GetMask("Mesh")))
-        {
-            stickyPlacementIndicator.transform.position = hitInfo.point;
-            stickyPlacementIndicator.transform.rotation = Quaternion.LookRotation(-hitInfo.normal);
-        }
-
-        //Physics.Raycast(raycastRay, out RaycastHit UIhitInfo, 100);
-        //int buttonID = UIhitInfo.collider.gameObject.GetInstanceID();
-        //Type hitType = UIhitInfo.collider.gameObject.GetType();
-
-        if (stickyRay)
-        {
-            Physics.Raycast(raycastRay, out RaycastHit stickyHitInfo, 100);
-            GameObject hitSticky = stickyHitInfo.collider.gameObject;
-            Debug.Log("I just hit " + hitSticky.GetInstanceID());
-            OnStickyHitEvent?.Invoke(stickyHitInfo.collider.gameObject.GetInstanceID());
-             stickyRay = false;
-        }
-
-
-        var eyes = eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
-
-
-
-    }
+ 
 
 
     public void SetAnchor(Pose activeStickyPose)
