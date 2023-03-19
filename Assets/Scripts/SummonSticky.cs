@@ -21,45 +21,42 @@ public class SummonSticky : MonoBehaviour
         originalRotation = transform.rotation;
         summonButton.onClick.AddListener(MoveStickyToNewPosition);
         sendBackButton.onClick.AddListener(MoveStickyToOriginalPosition);
-
-
     }
 
     void OnEnable()
     {
-        PlaceSticky.OnStickyHitEvent += HandleStickyRay;
-        Debug.Log("I am " + this.gameObject.GetInstanceID());
+        //PlaceSticky.OnStickyHitEvent += HandleStickyRay;
+        //Debug.Log("I am " + this.gameObject.GetInstanceID());
     }
 
     void OnDisable()
     {
-        PlaceSticky.OnStickyHitEvent -= HandleStickyRay;
+        //PlaceSticky.OnStickyHitEvent -= HandleStickyRay;
     }
 
 
-    void HandleStickyRay(int stickyID)
-    {
+    //void HandleStickyRay(int stickyID)
+    //{
         
-        if(this.gameObject.GetInstanceID() == stickyID)
-        {
+    //    if(this.gameObject.GetInstanceID() == stickyID)
+    //    {
 
-            if(!atNewPosition)
-            {
-                StartCoroutine(LerpStickyToNewPosition());
-                atNewPosition = true;
-            }
-            else
-            {
-                StartCoroutine(LerpStickyToOriginalPosition());
-                atNewPosition = false;  
-            }
+    //        if(!atNewPosition)
+    //        {
+    //            StartCoroutine(LerpStickyToNewPosition());
+    //            atNewPosition = true;
+    //        }
+    //        else
+    //        {
+    //            StartCoroutine(LerpStickyToOriginalPosition());
+    //            atNewPosition = false;  
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
     public void MoveStickyToNewPosition()
-    {
-    
+    {    
             if (!atNewPosition)
             {
                 StartCoroutine(LerpStickyToNewPosition());
@@ -69,9 +66,7 @@ public class SummonSticky : MonoBehaviour
             {
                 StartCoroutine(LerpStickyToOriginalPosition());
                 atNewPosition = false;
-            }
-
-       
+            }       
     }
 
     private IEnumerator LerpStickyToNewPosition()

@@ -19,34 +19,50 @@ using static MagicLeapInputs;
 
 public class PlaceSticky : MonoBehaviour
 {
+    
     private MagicLeapInputs magicLeapInputs;
     private MagicLeapInputs.ControllerActions controllerActions;
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
+    [Header("Eye tracking")]
     private MagicLeapInputs.EyesActions eyesActions;
-
+    [Tooltip("Drag the eye tracker object from the XR origin in here.")]
     public GameObject eyeTracker;
+    [Tooltip("Drag the eye tracker status menu parent object in here.")]
     public GameObject eyeTrackerMenu;
+    [Header("Eye tracking status menu")]
+    //Eye tracking menu properties
+    [Tooltip("Add the eye tracking status text in here. This will be updated at runtime based on the eye tracking status")]
+    public TextMeshProUGUI eyeTrackingText;
 
+    [Header("Meshing")]
+    [Tooltip("Add the mesh controller object.")]
     public GameObject MeshController;
 
-    public GameObject stickyNote;    
+    [Header("Sticky notes properties")]
+    [Tooltip("Sticky note prefab.")]
+    public GameObject stickyNote;
+    [Tooltip("Sticky note indicator prefab.")]
     public GameObject stickyPlacementIndicator;
-    public string newStickyText = "Click to add text";
+    
 
     //Creat a list to hold the random sticky text
     List<string> myReminders = new List<string>();
 
-
+    [Header("Spatial checking menu")]
     //Spatial menu properties
+    [Tooltip("Drag the Open spaces button in this slot.")]
     public Button openSpaceButton;
+    [Tooltip("Drag the continue button in this slot.")]
     public Button continueButton;
+    [Tooltip("Drag the Spatial check menu parent object in this slot.")]
     public GameObject spatialMenu;
+    [Tooltip("The status text that will be updated goes in this slot.")]
     public TextMeshProUGUI menuSpatialText;
+    [Tooltip("The status text that will be updated goes in this slot.")]
     public TextMeshProUGUI menuSpacesText;
 
-    //Eye tracking menu properties
-    public TextMeshProUGUI eyeTrackingText;
+
 
     private bool isPlacing = false;
 
