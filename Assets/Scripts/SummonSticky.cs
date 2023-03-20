@@ -21,29 +21,43 @@ public class SummonSticky : MonoBehaviour
         originalRotation = transform.rotation;
         summonButton.onClick.AddListener(MoveStickyToNewPosition);
         sendBackButton.onClick.AddListener(MoveStickyToOriginalPosition);
-
-
     }
 
     void OnEnable()
     {
-        PlaceSticky.OnStickyHitEvent += HandleStickyRay;
-        Debug.Log("I am " + this.gameObject.GetInstanceID());
+        //PlaceSticky.OnStickyHitEvent += HandleStickyRay;
+        //Debug.Log("I am " + this.gameObject.GetInstanceID());
     }
 
     void OnDisable()
     {
-        PlaceSticky.OnStickyHitEvent -= HandleStickyRay;
+        //PlaceSticky.OnStickyHitEvent -= HandleStickyRay;
     }
 
 
-    void HandleStickyRay(int stickyID)
-    {
+    //void HandleStickyRay(int stickyID)
+    //{
         
-        if(this.gameObject.GetInstanceID() == stickyID)
-        {
+    //    if(this.gameObject.GetInstanceID() == stickyID)
+    //    {
 
-            if(!atNewPosition)
+    //        if(!atNewPosition)
+    //        {
+    //            StartCoroutine(LerpStickyToNewPosition());
+    //            atNewPosition = true;
+    //        }
+    //        else
+    //        {
+    //            StartCoroutine(LerpStickyToOriginalPosition());
+    //            atNewPosition = false;  
+    //        }
+
+    //    }
+    //}
+
+    public void MoveStickyToNewPosition()
+    {    
+            if (!atNewPosition)
             {
                 StartCoroutine(LerpStickyToNewPosition());
                 atNewPosition = true;
@@ -51,21 +65,8 @@ public class SummonSticky : MonoBehaviour
             else
             {
                 StartCoroutine(LerpStickyToOriginalPosition());
-                atNewPosition = false;  
-            }
-
-        }
-    }
-
-    private void MoveStickyToNewPosition()
-    {
-        StartCoroutine(LerpStickyToNewPosition());
-        //    headPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
-        //    this.transform.position = headPosition;
-        //    headRotation = Camera.main.transform.rotation;
-        //    this.transform.rotation = headRotation;
-        //    summonButton.gameObject.SetActive(false);
-        //    sendBackButton.gameObject.SetActive(true);
+                atNewPosition = false;
+            }       
     }
 
     private IEnumerator LerpStickyToNewPosition()
