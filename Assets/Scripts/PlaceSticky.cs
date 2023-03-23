@@ -16,9 +16,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
-using static MagicLeapInputs;
-using static UnityEditor.FilePathAttribute;
-using static UnityEngine.XR.MagicLeap.MLMedia.Player.Track;
+
 
 
 public class PlaceSticky : MonoBehaviour

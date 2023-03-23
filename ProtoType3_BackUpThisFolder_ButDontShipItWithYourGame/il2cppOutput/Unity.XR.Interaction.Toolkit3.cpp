@@ -9431,7 +9431,7 @@ IL_0022_1:
 				XRTargetEvaluator_t5B05D5A70C86720DA2EF19C671D2E4A944F85187* L_7 = V_1;
 				NullCheck(L_6);
 				bool L_8;
-				L_8 = VirtualFuncInvoker1< bool, RuntimeObject* >::Invoke(113, L_6, L_7);
+				L_8 = VirtualFuncInvoker1< bool, RuntimeObject* >::Invoke(114, L_6, L_7);
 				if (!L_8)
 				{
 					goto IL_0037_1;
@@ -18546,7 +18546,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MockTouch__cctor_m8CB1EF25E52039393CAB60
 		L_2 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_1, NULL);
 		NullCheck(L_2);
 		FieldInfoU5BU5D_t50D47CBECF1AEB152F555803E3329D9E34DBF8D8* L_3;
-		L_3 = VirtualFuncInvoker1< FieldInfoU5BU5D_t50D47CBECF1AEB152F555803E3329D9E34DBF8D8*, int32_t >::Invoke(85, L_2, ((int32_t)36));
+		L_3 = VirtualFuncInvoker1< FieldInfoU5BU5D_t50D47CBECF1AEB152F555803E3329D9E34DBF8D8*, int32_t >::Invoke(86, L_2, ((int32_t)36));
 		V_0 = L_3;
 		V_1 = 0;
 		goto IL_0039;

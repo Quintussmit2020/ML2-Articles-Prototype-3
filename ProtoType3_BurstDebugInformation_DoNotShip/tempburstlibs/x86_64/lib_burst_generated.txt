@@ -213,6 +213,10 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Subsystem.Registration.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Soundfield.Tests.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\AnalysisDemo.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Soundfield.Editor.Tests.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\RuntimeGizmos.dll
 --assembly-folder=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
@@ -439,6 +443,10 @@ Library: lib_burst_generated
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Subsystem.Registration.dll
 --root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Soundfield.Tests.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\AnalysisDemo.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\Unity.Soundfield.Editor.Tests.dll
+--root-assembly=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\RuntimeGizmos.dll
 --assembly-folder=C:\Repositories\Github\ML2 Articles Prototype 3\Temp\StagingArea\Data\Managed\
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=Unity.Jobs.IJobForExtensions+ForJobStruct`1[[UnityEngine.Rendering.Universal.TileRangeExpansionJob, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Rendering.Universal.TileRangeExpansionJob&, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--adceb2156d08d59afc9749dc2521fd2b

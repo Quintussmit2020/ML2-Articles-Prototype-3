@@ -79,7 +79,7 @@ public class SummonSticky : MonoBehaviour
         Quaternion endRotation = Camera.main.transform.rotation;
 
         float elapsedTime = 0f;
-        float duration = 1f;
+        float duration = summonSpeed;
 
         summonButton.gameObject.SetActive(false);
         sendBackButton.gameObject.SetActive(true);

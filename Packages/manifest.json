@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.magicleap.soundfield": "file:C:/Users/quint/MagicLeap/tools/unity/msa/v3.2.3-230208.82.de98902_1.2.0-dev1",
-    "com.magicleap.unitysdk": "file:/Users/Aaron/MagicLeap/tools/unity/v1.4.0/com.magicleap.unitysdk.tgz",
+    "com.magicleap.soundfield": "file:msa/v3.2.3-230208.82.de98902_1.2.0-dev1",
+    "com.magicleap.unitysdk": "file:com.magicleap.unitysdk.tgz",
     "com.unity.collab-proxy": "1.17.2",
     "com.unity.ide.rider": "3.0.15",
     "com.unity.ide.visualstudio": "2.0.16",
