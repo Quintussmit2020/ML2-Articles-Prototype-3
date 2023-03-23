@@ -110,6 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   summonButton: {fileID: 8529199079617896403}
   sendBackButton: {fileID: 3985558758719471733}
+  summonSpeed: 0.2
+  distanceFromEye: 1
 --- !u!65 &1972908688105264629
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -129,8 +131,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.93525696, z: 0.071074486}
-  m_Center: {x: 0, y: -0.032371514, z: -0.05847863}
+  m_Size: {x: 2.5871277, y: 1.5644073, z: 0.25922358}
+  m_Center: {x: 0.015640259, y: -0.31528473, z: -0.15255316}
 --- !u!114 &8975387437357714831
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using MagicLeap.Core;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -15,6 +17,8 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
 using static MagicLeapInputs;
+using static UnityEditor.FilePathAttribute;
+using static UnityEngine.XR.MagicLeap.MLMedia.Player.Track;
 
 
 public class PlaceSticky : MonoBehaviour
@@ -122,12 +126,24 @@ public class PlaceSticky : MonoBehaviour
     {
         //add some items to our sticky note content list
         myReminders.Add("buy milk");
-        myReminders.Add("You can do this!");
-        myReminders.Add("Solve world hunger");
-        myReminders.Add("invest in eggs");
         myReminders.Add("Call Bob from accounting");
         myReminders.Add("Password: #33$4156");
-        myReminders.Add("Pay utilities!!");
+        myReminders.Add("Check email");
+        myReminders.Add("Water plants");
+        myReminders.Add("Pick up dry cleaning");
+        myReminders.Add("Return library books");
+        myReminders.Add("Schedule haircut");
+        myReminders.Add("Pay electricity bill");
+        myReminders.Add("Make grocery list");
+        myReminders.Add("Book flight tickets");
+        myReminders.Add("Attend team meeting");
+        myReminders.Add("Order office supplies");
+        myReminders.Add("Renew car insurance");
+        myReminders.Add("Pick up dry cleaning");
+        myReminders.Add("Feed cat");
+        myReminders.Add("Call doctor");
+        myReminders.Add("Write blog post");
+
 
         magicLeapInputs = new MagicLeapInputs();
         magicLeapInputs.Enable();

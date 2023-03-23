@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.magicleap.soundfield": "file:/Users/Aaron/MagicLeap/tools/unity/msa/v3.2.3-230208.82.de98902_1.2.0-dev1",
+    "com.magicleap.soundfield": "file:C:/Users/quint/MagicLeap/tools/unity/msa/v3.2.3-230208.82.de98902_1.2.0-dev1",
     "com.magicleap.unitysdk": "file:/Users/Aaron/MagicLeap/tools/unity/v1.4.0/com.magicleap.unitysdk.tgz",
     "com.unity.collab-proxy": "1.17.2",
     "com.unity.ide.rider": "3.0.15",
@@ -45,5 +45,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Magic Leap",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "com.magicleap"
+      ]
+    }
+  ]
 }

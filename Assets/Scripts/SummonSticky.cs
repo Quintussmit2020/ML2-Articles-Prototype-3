@@ -13,7 +13,8 @@ public class SummonSticky : MonoBehaviour
     private Quaternion originalRotation;
     private Quaternion headRotation;
     private bool atNewPosition = false;
-
+    public float summonSpeed = 0.5f;
+    public float distanceFromEye = 1.0f;
 
     private void Start()
     {
@@ -74,7 +75,7 @@ public class SummonSticky : MonoBehaviour
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
 
-        Vector3 endPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
+        Vector3 endPosition = Camera.main.transform.position + Camera.main.transform.forward * distanceFromEye;
         Quaternion endRotation = Camera.main.transform.rotation;
 
         float elapsedTime = 0f;
@@ -115,7 +116,7 @@ public class SummonSticky : MonoBehaviour
         Quaternion endRotation = originalRotation;
 
         float elapsedTime = 0f;
-        float duration = 1f;
+        float duration = summonSpeed;
 
         summonButton.gameObject.SetActive(true);
         sendBackButton.gameObject.SetActive(false);
